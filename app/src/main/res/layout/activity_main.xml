@@ -17,12 +17,10 @@
     <ImageView
         android:id="@+id/imageViewUserImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars"
-        android:paddingTop="50dp"
-        android:paddingBottom="20dp"
+        android:layout_height="360dp"
+        android:contentDescription="User Image"
         android:labelFor="@id/imageViewUserImage"
-        android:contentDescription="User Image"/>
+        android:src="@drawable/profile" />
 
     <EditText
         android:id="@+id/editTextName"
