@@ -3,17 +3,26 @@ package com.example.myregisterapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ProfileInfoActivity extends AppCompatActivity implements View.OnClickListener {
     TextView tvName;
     TextView tvPhoneNo;
     TextView tvEmail;
     TextView tvAddress;
+    ImageView ivProfileImage;
     Button btnDone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,7 @@ public class ProfileInfoActivity extends AppCompatActivity implements View.OnCli
         btnDone = findViewById(R.id.buttonDone);
         btnDone.setOnClickListener(this);
 
+        ivProfileImage = findViewById(R.id.imageViewUserImage);
         tvName = findViewById(R.id.textViewName);
         tvPhoneNo = findViewById(R.id.textViewPhoneNo);
         tvEmail = findViewById(R.id.textViewEmail);
@@ -39,18 +49,27 @@ public class ProfileInfoActivity extends AppCompatActivity implements View.OnCli
             if(name != null){
                 tvName.setText(name);
             }
-            if(name != null){
+            if(phoneNo != null){
                 tvPhoneNo.setText(phoneNo);
             }
-            if(name != null){
+            if(email != null){
                 tvEmail.setText(email);
             }
-            if(name != null){
+            if(address != null){
                 tvAddress.setText(address);
             }
 
+            Bitmap image = null;
+            String filename = getIntent().getStringExtra("image");
+            try {
+                FileInputStream is = this.openFileInput(filename);
+                image = BitmapFactory.decodeStream(is);
+                ivProfileImage.setImageBitmap(image);
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     @Override

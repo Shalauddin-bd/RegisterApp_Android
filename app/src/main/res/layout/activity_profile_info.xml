@@ -13,6 +13,14 @@
     android:paddingEnd="20dp"
     android:paddingTop="40dp">
 
+    <ImageView
+        android:id="@+id/imageViewUserImage"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:contentDescription="User Image"
+        android:labelFor="@id/imageViewUserImage"
+        android:src="@drawable/profile" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

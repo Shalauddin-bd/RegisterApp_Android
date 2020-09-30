@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,7 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etAddress;
     ImageView ivProfileImage;
     static final int PickImage=1;
+
     Uri imageUri;
+    Bitmap image;
 
     Button btnSubmit;
     @Override
@@ -51,13 +55,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gallery.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(gallery,"Select image"),PickImage );
         } else if(view.getId()==R.id.buttonSubmit){
-            Intent intent = new Intent(MainActivity.this, ProfileInfoActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("name",etName.getText().toString());
-            intent.putExtra("phoneNo",etPhoneNo.getText().toString());
-            intent.putExtra("email",etEmail.getText().toString());
-            intent.putExtra("address",etAddress.getText().toString());
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(MainActivity.this, ProfileInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("name",etName.getText().toString());
+                intent.putExtra("phoneNo",etPhoneNo.getText().toString());
+                intent.putExtra("email",etEmail.getText().toString());
+                intent.putExtra("address",etAddress.getText().toString());
+
+            //Convert to byte array
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            byte[] byteArray = stream.toByteArray();
+//            intent.putExtra("image",byteArray);
+
+                //Write file
+                String filename = "bitmap.png";
+                FileOutputStream stream = this.openFileOutput(filename, Context.MODE_PRIVATE);
+                image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                //Cleanup
+                stream.close();
+                image.recycle();
+
+                intent.putExtra("image", filename);
+
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -68,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == PickImage && resultCode== RESULT_OK)
             imageUri = data.getData();
        try {
-           Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+           image = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
            ivProfileImage.setImageBitmap(image);
        }
        catch (IOException e){
