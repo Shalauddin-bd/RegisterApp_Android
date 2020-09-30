@@ -50,12 +50,12 @@
         android:hint="Email" />
 
     <EditText
-        android:id="@+id/editTextTextAddress"
+        android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:labelFor="@id/editTextTextAddress"
+        android:labelFor="@id/editTextAddress"
         android:hint="Address" />
 
     <Button

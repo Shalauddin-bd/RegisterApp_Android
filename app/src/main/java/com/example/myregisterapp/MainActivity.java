@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //private Context context;
     EditText etName;
+    EditText etPhoneNo;
+    EditText etEmail;
+    EditText etAddress;
     ImageView ivProfileImage;
     static final int PickImage=1;
     Uri imageUri;
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ivProfileImage = findViewById(R.id.imageViewUserImage);
         ivProfileImage.setOnClickListener(this);
         etName=findViewById(R.id.editTextName);
+        etPhoneNo=findViewById(R.id.editTextPhoneNo);
+        etEmail=findViewById(R.id.editTextEmail);
+        etAddress=findViewById(R.id.editTextAddress);
         btnSubmit = findViewById(R.id.buttonSubmit);
         btnSubmit.setOnClickListener(this);
     }
@@ -48,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this, ProfileInfoActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("name",etName.getText().toString());
+            intent.putExtra("phoneNo",etPhoneNo.getText().toString());
+            intent.putExtra("email",etEmail.getText().toString());
+            intent.putExtra("address",etAddress.getText().toString());
             startActivity(intent);
         }
     }
